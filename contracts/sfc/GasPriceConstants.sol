@@ -24,6 +24,7 @@ library GP {
     }
 
     function initialMinGasPrice() internal pure returns (uint256) {
-        return 100 * 1e9;
+        // return 100 * 1e9;
+        return 0;
     }
 }

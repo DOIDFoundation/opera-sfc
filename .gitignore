@@ -1,6 +1,9 @@
 .idea/
+.env*
 node_modules
+artifacts
 build
+cache
 coverage
 coverage.json
 /.coverage_artifacts/
