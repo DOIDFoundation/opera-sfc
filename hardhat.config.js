@@ -1,60 +1,47 @@
-require('@nomiclabs/hardhat-waffle');
-require('@nomiclabs/hardhat-ethers');
+require('@nomicfoundation/hardhat-toolbox');
+require('dotenv/config');
 require('@nomiclabs/hardhat-truffle5');
-require('@nomiclabs/hardhat-web3');
-require('@openzeppelin/test-helpers');
-require('hardhat-contract-sizer');
-require('@nomiclabs/hardhat-etherscan');
-require('dotenv').config();
 
-const PRIVATE_KEY = process.env.PRIVATE_KEY;
-const API_KEY = process.env.API_KEY;
+// This is a sample Hardhat task. To learn how to create your own go to
+// https://hardhat.org/guides/create-task.html
+task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
+  const accounts = await hre.ethers.getSigners();
 
+  for (const account of accounts) {
+    console.log(account.address);
+  }
+});
+
+function accounts() {
+  privatekey = process.env.PrivateKey;
+  if (!privatekey)
+    return {
+      mnemonic: 'test test test test test test test test test test test junk',
+    };
+  return [privatekey];
+}
+
+/** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
+  // defaultNetwork: 'localhost',
   networks: {
-    hardhat: {
-      allowUnlimitedContractSize: true
+    doidtest: {
+      gasPrice: 3000000000,
+      url: 'https://rpc.testnet.doid.tech',
+      accounts: accounts(),
     },
-    localhost: {
-      url: 'http://127.0.0.1:8545'
-    },
-    mainnet: {
-      url: 'https://rpcapi.fantom.network',
-      chainId: 250
-    },
-    testnet: {
-      url: 'https://rpc.testnet.fantom.network',
-      chainId: 4002,
-      accounts: [`0x${PRIVATE_KEY}`]
-    }
-  },
-  etherscan: {
-    apiKey: {
-      ftmTestnet: API_KEY
-    }
-  },
-  contractSizer: {
-    runOnCompile: true
-  },
-  mocha: {},
-  abiExporter: {
-    path: './build/contracts',
-    clear: true,
-    flat: true,
-    spacing: 2
   },
   solidity: {
-    version: '0.5.17',
-    settings: {
-      optimizer: {
-        enabled: true,
-        runs: 200
-      }
-    }
+    compilers: [
+      {
+        version: '0.5.17',
+        settings: {
+          optimizer: {
+            enabled: true,
+            runs: 200,
+          },
+        },
+      },
+    ],
   },
-  gasReporter: {
-    currency: 'USD',
-    enabled: false,
-    gasPrice: 50
-  }
 };

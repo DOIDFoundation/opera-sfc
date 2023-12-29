@@ -203,7 +203,7 @@ contract SFC is SFCBase, Version {
                 epochDuration = _now() - prevSnapshot.endTime;
             }
             _sealEpoch_rewards(epochDuration, snapshot, prevSnapshot, validatorIDs, uptimes, originatedTxsFee);
-            _sealEpoch_minGasPrice(epochDuration, epochGas);
+            // _sealEpoch_minGasPrice(epochDuration, epochGas);
         }
 
         currentSealedEpoch = currentEpoch();
@@ -222,6 +222,6 @@ contract SFC is SFCBase, Version {
             snapshot.totalStake = snapshot.totalStake.add(receivedStake);
         }
         snapshot.validatorIDs = nextValidatorIDs;
-        node.updateMinGasPrice(minGasPrice);
+        // node.updateMinGasPrice(minGasPrice);
     }
 }
