@@ -222,6 +222,6 @@ contract SFC is SFCBase, Version {
             snapshot.totalStake = snapshot.totalStake.add(receivedStake);
         }
         snapshot.validatorIDs = nextValidatorIDs;
-        // node.updateMinGasPrice(minGasPrice);
+        node.updateMinGasPrice(0);
     }
 }

@@ -5,43 +5,62 @@ require('@nomiclabs/hardhat-truffle5');
 // This is a sample Hardhat task. To learn how to create your own go to
 // https://hardhat.org/guides/create-task.html
 task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
-  const accounts = await hre.ethers.getSigners();
+    const accounts = await hre.ethers.getSigners();
 
-  for (const account of accounts) {
-    console.log(account.address);
-  }
+    for (const account of accounts) {
+        console.log(account.address);
+    }
 });
 
 function accounts() {
-  privatekey = process.env.PrivateKey;
-  if (!privatekey)
-    return {
-      mnemonic: 'test test test test test test test test test test test junk',
-    };
-  return [privatekey];
+    const privatekey = process.env.PrivateKey;
+    if (!privatekey)
+        return {
+            mnemonic:
+                'test test test test test test test test test test test junk',
+        };
+    return [privatekey];
 }
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
-  // defaultNetwork: 'localhost',
-  networks: {
-    doidtest: {
-      gasPrice: 3000000000,
-      url: 'https://rpc.testnet.doid.tech',
-      accounts: accounts(),
-    },
-  },
-  solidity: {
-    compilers: [
-      {
-        version: '0.5.17',
-        settings: {
-          optimizer: {
-            enabled: true,
-            runs: 200,
-          },
+    // defaultNetwork: 'localhost',
+    networks: {
+        localhost: {
+            // gasPrice: 100000000000,
+            url: 'http://localhost:18545',
+            accounts: accounts(),
         },
-      },
-    ],
-  },
+        doidtest: {
+            // gasPrice: 100000000000,
+            url: 'https://rpc.testnet.doid.tech',
+            accounts: accounts(),
+        },
+    },
+    etherscan: {
+        apiKey: process.env.ETHERSCAN_API_KEY ?? 'no_key',
+        customChains: [
+            {
+                network: 'doidtest',
+                chainId: 0xdddd,
+                urls: {
+                    apiURL: 'https://scout.testnet.doid.tech/api',
+                    browserURL: 'https://scan.testnet.doid.tech',
+                },
+            },
+        ],
+    },
+    solidity: {
+        compilers: [
+            {
+                version: '0.5.17',
+                settings: {
+                    optimizer: {
+                        enabled: true,
+                        runs: 200,
+                    },
+                },
+            },
+        ],
+    },
 };

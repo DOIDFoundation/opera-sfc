@@ -3,6 +3,11 @@ all: build
 
 .PHONY: build
 build:
+	npm install --no-save
+	npm install --no-save truffle@5.2.4
+	npm run build
+
+build-docker:
 	docker run --rm --user $$(id -u):$$(id -g) -v $(PWD):/src -w /src node:14.16.0 bash -c \
 	    'export NPM_CONFIG_PREFIX=~; npm install --no-save; npm install --no-save truffle@5.2.4; npm run build'
 
