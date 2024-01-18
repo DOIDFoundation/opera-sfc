@@ -48,7 +48,7 @@ contract ConstantsManager is Ownable {
 //    }
 
     function updateMinSelfStake(uint256 v) onlyOwner external {
-        require(v >= 100000 * 1e18, "too small value");
+        require(v >= 10000 * 1e18, "too small value");
         require(v <= 10000000 * 1e18, "too large value");
         minSelfStake = v;
     }

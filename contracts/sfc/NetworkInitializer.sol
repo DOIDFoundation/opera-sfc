@@ -13,7 +13,7 @@ contract NetworkInitializer {
 
         ConstantsManager consts = new ConstantsManager();
         consts.initialize();
-        consts.updateMinSelfStake(500000 * 1e18);
+        consts.updateMinSelfStake(10000 * 1e18);
         consts.updateMaxDelegatedRatio(16 * Decimal.unit());
         consts.updateValidatorCommission((15 * Decimal.unit()) / 100);
         consts.updateBurntFeeShare((20 * Decimal.unit()) / 100);
@@ -23,7 +23,7 @@ contract NetworkInitializer {
         consts.updateMaxLockupDuration(86400 * 365);
         consts.updateWithdrawalPeriodEpochs(3);
         consts.updateWithdrawalPeriodTime(60 * 60 * 24 * 7);
-        consts.updateBaseRewardPerSecond(2668658453701531600);
+        consts.updateBaseRewardPerSecond(1759259259259259200);
         consts.updateOfflinePenaltyThresholdTime(5 days);
         consts.updateOfflinePenaltyThresholdBlocksNum(1000);
         consts.updateTargetGasPowerPerSecond(2000000);
