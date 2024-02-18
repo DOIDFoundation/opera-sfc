@@ -12,6 +12,13 @@ task('accounts', 'Prints the list of accounts', async (taskArgs, hre) => {
     }
 });
 
+task('balance', 'Prints the balance of accounts', async (taskArgs, hre) => {
+  const accounts = await hre.ethers.getSigners()
+  for (const account of accounts) {
+    console.log(account.address, hre.ethers.formatEther(await account.provider.getBalance(account.address)))
+  }
+})
+
 function accounts() {
     const privatekey = process.env.PrivateKey;
     if (!privatekey)
@@ -36,15 +43,28 @@ module.exports = {
             url: 'https://rpc.testnet.doid.tech',
             accounts: accounts(),
         },
+        doid: {
+            // gasPrice: 100000000000,
+            url: 'https://rpc.doid.tech',
+            accounts: accounts(),
+        },
     },
     etherscan: {
         apiKey: process.env.ETHERSCAN_API_KEY ?? 'no_key',
         customChains: [
             {
+                network: 'doid',
+                chainId: 0xd01d,
+                urls: {
+                    apiURL: 'https://scan.doid.tech/api',
+                    browserURL: 'https://scan.doid.tech',
+                },
+            },
+            {
                 network: 'doidtest',
                 chainId: 0xdddd,
                 urls: {
-                    apiURL: 'https://scout.testnet.doid.tech/api',
+                    apiURL: 'https://scan.testnet.doid.tech/api',
                     browserURL: 'https://scan.testnet.doid.tech',
                 },
             },
@@ -57,7 +77,7 @@ module.exports = {
                 settings: {
                     optimizer: {
                         enabled: true,
-                        runs: 200,
+                        runs: 10000,
                     },
                 },
             },

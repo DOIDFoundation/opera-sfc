@@ -105,8 +105,8 @@ contract ConstantsManager is Ownable {
     }
 
     function updateBaseRewardPerSecond(uint256 v) onlyOwner external {
-        require(v >= 0.5 * 1e18, "too small value");
-        require(v <= 32 * 1e18, "too large value");
+        require(v >= 0.05 * 1e18, "too small value");
+        require(v <= 2 * 1e18, "too large value");
         baseRewardPerSecond = v;
     }
 
